@@ -15,7 +15,7 @@ monBody.appendChild(divContainer);
 mySection.appendChild(divContainer);
 
 
-let divDisplay = document.createElement('div');
+let divDisplay = document.createElement('input');
 divDisplay.setAttribute('id','divDisplay');
 divContainer.appendChild(divDisplay);
 
@@ -26,7 +26,7 @@ divContainer.appendChild(divBtn);
 
 
 
-let tab = ["1","2","3","*","4","5","6","+","7","8","9","-","C",".","=","/"]
+let tab = ["1","2","3","C","4","5","6","+","7","8","9","*","-","0",".","/","="]
 let i = 0;
 tab.forEach(element => {
     element = document.createElement('button')
@@ -49,26 +49,61 @@ allButtons.forEach(element => {
     element.addEventListener('click', (e) => {
         switch(e.target.innerText){
             case 'C':
-                divDisplay.innerText ='';
+                divDisplay.value ='';
                 break;
                 case'.': 
                 if(e.target.innerText == '.'){
-                    divDisplay.innerText = 'error404'
+                    divDisplay.value = 'error404'
                     alert('point is not available');
                 }
                 break;
                 case '=' :
                     try{
-                        divDisplay.innerText =eval(divDisplay.innerText);
+                        divDisplay.value =Math.floor(eval(divDisplay.value))
                     } catch {
                         divDisplay.innerText ='Error!'
                     }
                     break;
             default: 
-            divDisplay.innerText += e.target.innerText;
+            divDisplay.value += e.target.innerText;
         }
+        document.body.addEventListener('keydown', (e)=> {
+            if(
+                e.key === '0' ||
+                e.key === '1' ||
+                e.key === '2' ||
+                e.key === '3' ||
+                e.key === '4' ||
+                e.key === '5' ||
+                e.key === '6' ||
+                e.key === '7' ||
+                e.key === '8' ||
+                e.key === '9' ||
+                e.key === '.' ||
+                e.key ==='Enter'
+            ){
+                clickButtonEl(e.key);
+            }
+        });
     })
 })
+
+console.log(allButtons);
+
+let clickButtonEl = (key) =>{
+    allButtons.forEach(button => {
+        if(button.innerText === key ){
+            button.click();
+        }
+    })
+}
+
+document.body.addEventListener("keyup", (event) =>{
+    let name = event.key;
+  if (name === 'Enter') {
+    divDisplay.value =Math.floor(eval(divDisplay.value))
+}
+});
 /* ----------------------------- // appendChild ----------------------------- */
 
 // myBody.appendChild(mySection)
@@ -93,4 +128,4 @@ allButtons.forEach(element => {
 
 
 
-/* --------------------------- // to set attribute -------------------------- */
+
